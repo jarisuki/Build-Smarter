@@ -1,146 +1,1301 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Build Smarter</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build Smarter — Jasper Kwan's Coding Course</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+/* ── Reset & Base ─────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: #0F1117;
+  color: #1A1A2E;
+  min-height: 100vh;
+  display: flex;
+}
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-        }
+/* ── Module Themes ────────────────────────────────────────────────────────── */
+:root {
+  --sidebar-w: 288px;
+  --m0: #7C3AED; --m0-light: #EDE9FE; --m0-mid: #A78BFA;
+  --m1: #2563EB; --m1-light: #DBEAFE; --m1-mid: #60A5FA;
+  --m2: #DC2626; --m2-light: #FEE2E2; --m2-mid: #F87171;
+  --m3: #0891B2; --m3-light: #CFFAFE; --m3-mid: #22D3EE;
+  --m4: #D97706; --m4-light: #FEF3C7; --m4-mid: #FCD34D;
+  --m5: #059669; --m5-light: #D1FAE5; --m5-mid: #34D399;
+  --current: #7C3AED;
+  --current-light: #EDE9FE;
+  --current-mid: #A78BFA;
+}
 
-        header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 2rem 0;
-            text-align: center;
-        }
+/* ── Sidebar ──────────────────────────────────────────────────────────────── */
+#sidebar {
+  width: var(--sidebar-w);
+  min-height: 100vh;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  background: #0F1117;
+  border-right: 1px solid #1E2030;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  z-index: 100;
+}
 
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
+.sidebar-brand {
+  padding: 28px 24px 20px;
+  border-bottom: 1px solid #1E2030;
+}
 
-        header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
+.brand-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #7C3AED, #2563EB);
+  border-radius: 12px;
+  padding: 8px 14px;
+  margin-bottom: 14px;
+}
 
-        main {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
+.brand-badge span { font-size: 18px; }
+.brand-badge strong {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  color: white;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
 
-        section {
-            margin-bottom: 3rem;
-        }
+.sidebar-brand h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
 
-        h2 {
-            color: #667eea;
-            margin-bottom: 1rem;
-            font-size: 1.8rem;
-        }
+.sidebar-brand p {
+  font-size: 12px;
+  color: #6B7280;
+  line-height: 1.4;
+}
 
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
+/* Progress bar in sidebar */
+.sidebar-progress {
+  padding: 14px 24px;
+  border-bottom: 1px solid #1E2030;
+}
 
-        .feature-card {
-            background: #f4f4f4;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #6B7280;
+  margin-bottom: 8px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
 
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
+.progress-track {
+  height: 4px;
+  background: #1E2030;
+  border-radius: 99px;
+  overflow: hidden;
+}
 
-        .feature-card h3 {
-            color: #667eea;
-            margin-bottom: 0.5rem;
-        }
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #7C3AED, #2563EB);
+  border-radius: 99px;
+  transition: width 0.4s ease;
+  width: 0%;
+}
 
-        footer {
-            background: #333;
-            color: white;
-            text-align: center;
-            padding: 2rem;
-            margin-top: 3rem;
-        }
+/* Nav sections */
+.nav-section-label {
+  padding: 16px 24px 8px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #4B5563;
+  font-weight: 700;
+}
 
-        a {
-            color: #667eea;
-            text-decoration: none;
-        }
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 24px;
+  cursor: pointer;
+  transition: background 0.15s;
+  position: relative;
+}
 
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+.nav-item:hover { background: #1A1D2E; }
+
+.nav-item.active { background: #1A1D2E; }
+
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 6px; bottom: 6px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--current);
+}
+
+.nav-dot {
+  width: 34px; height: 34px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+  background: #1E2030;
+  transition: background 0.15s;
+}
+
+.nav-item.active .nav-dot { background: var(--current); }
+
+.nav-item-text { min-width: 0; }
+.nav-item-text .wk {
+  font-size: 10px;
+  color: #6B7280;
+  display: block;
+  margin-bottom: 1px;
+  font-weight: 500;
+}
+.nav-item-text .ttl {
+  font-size: 13px;
+  color: #D1D5DB;
+  font-weight: 600;
+  line-height: 1.3;
+  display: block;
+}
+.nav-item.active .nav-item-text .ttl { color: #fff; }
+
+/* ── Main area ────────────────────────────────────────────────────────────── */
+#main {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 80% 0%, rgba(124,58,237,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 20% 100%, rgba(37,99,235,0.06) 0%, transparent 60%),
+    #F4F5F9;
+}
+
+/* dot grid background */
+#main::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  margin-left: var(--sidebar-w);
+  background-image: radial-gradient(circle, #C7D2E4 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.panel-wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 44px 48px 80px;
+}
+
+/* ── Panels ───────────────────────────────────────────────────────────────── */
+.panel { display: none; }
+.panel.active { display: block; animation: slideUp 0.25s ease; }
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── INTRO panel ──────────────────────────────────────────────────────────── */
+.intro-hero {
+  background: linear-gradient(135deg, #1E1347 0%, #1a2a6c 50%, #1E3A5F 100%);
+  border-radius: 24px;
+  padding: 52px 48px;
+  margin-bottom: 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+.intro-hero::after {
+  content: '🎮';
+  position: absolute;
+  right: 40px; bottom: 20px;
+  font-size: 120px;
+  opacity: 0.08;
+  line-height: 1;
+}
+
+.intro-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(124,58,237,0.35);
+  border: 1px solid rgba(167,139,250,0.4);
+  border-radius: 99px;
+  padding: 5px 14px;
+  font-size: 12px;
+  color: #C4B5FD;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 18px;
+}
+
+.intro-hero h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 46px;
+  font-weight: 800;
+  color: #FFFFFF;
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+
+.intro-hero h1 span { color: #A78BFA; }
+
+.intro-hero .sub {
+  font-size: 17px;
+  color: #94A3B8;
+  line-height: 1.6;
+  max-width: 520px;
+  margin-bottom: 28px;
+}
+
+.path-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-size: 13px;
+  color: #CBD5E1;
+  font-weight: 600;
+}
+
+.path-tag .arrow { color: #60A5FA; }
+
+/* Module overview cards on intro */
+.modules-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.mod-overview-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1.5px solid #E5E7EB;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.mod-overview-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  border-color: var(--c);
+}
+
+.mod-ov-icon {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.mod-ov-num {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.mod-ov-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1A1A2E;
+  line-height: 1.3;
+  margin-bottom: 4px;
+}
+
+.mod-ov-weeks {
+  font-size: 11px;
+  color: #9CA3AF;
+  font-weight: 500;
+}
+
+/* How it works */
+.section-heading {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #1A1A2E;
+  margin-bottom: 16px;
+}
+
+.how-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.how-card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  border: 1.5px solid #E5E7EB;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.how-card .hw-icon {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  margin-bottom: 14px;
+}
+
+.how-card h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1A1A2E;
+  margin-bottom: 6px;
+}
+
+.how-card p {
+  font-size: 13.5px;
+  color: #6B7280;
+  line-height: 1.65;
+}
+
+/* Difficulty legend */
+.legend-card {
+  background: white;
+  border-radius: 16px;
+  padding: 28px;
+  border: 1.5px solid #E5E7EB;
+  margin-bottom: 32px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.legend-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.legend-row:last-child { border-bottom: none; }
+
+.diff-badge {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.diff-1 { background: #FEF3C7; color: #92400E; }
+.diff-2 { background: #FED7AA; color: #7C2D12; }
+.diff-3 { background: #FECACA; color: #7F1D1D; }
+.diff-b { background: #D1FAE5; color: #065F46; font-size: 18px; }
+
+.legend-text strong { display: block; font-size: 14px; font-weight: 700; color: #1A1A2E; margin-bottom: 3px; }
+.legend-text span { font-size: 13px; color: #6B7280; line-height: 1.5; }
+
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #7C3AED, #2563EB);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: opacity 0.15s, transform 0.15s;
+  box-shadow: 0 4px 14px rgba(124,58,237,0.35);
+}
+
+.cta-btn:hover { opacity: 0.92; transform: translateY(-1px); }
+
+/* ── MODULE panel ─────────────────────────────────────────────────────────── */
+
+/* Top progress bar */
+.mod-progress-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 28px;
+}
+
+.mpb-seg {
+  flex: 1;
+  height: 5px;
+  border-radius: 99px;
+  background: #E5E7EB;
+  transition: background 0.3s;
+}
+
+.mpb-seg.done { background: var(--current); }
+.mpb-seg.active { background: var(--current); opacity: 0.5; }
+
+/* Module hero header */
+.mod-hero {
+  border-radius: 24px;
+  padding: 40px 44px;
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+  color: white;
+}
+
+.mod-hero::before {
+  content: attr(data-icon);
+  position: absolute;
+  right: 36px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 110px;
+  opacity: 0.12;
+  line-height: 1;
+}
+
+.mod-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 99px;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+  color: rgba(255,255,255,0.9);
+}
+
+.mod-hero h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 34px;
+  font-weight: 800;
+  margin-bottom: 10px;
+  line-height: 1.1;
+}
+
+.mod-hero .tagline {
+  font-size: 16px;
+  opacity: 0.8;
+  line-height: 1.55;
+  max-width: 480px;
+}
+
+/* Two-col layout */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+/* Cards */
+.card {
+  background: white;
+  border-radius: 18px;
+  border: 1.5px solid #E5E7EB;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 20px;
+  border-bottom: 1.5px solid #F3F4F6;
+}
+
+.card-header-icon {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.card-header h3 {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #9CA3AF;
+}
+
+/* Concepts list */
+.concepts-list {
+  list-style: none;
+  padding: 10px 0;
+}
+
+.concepts-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 20px;
+  font-size: 13.5px;
+  color: #374151;
+  line-height: 1.5;
+  border-bottom: 1px solid #F9FAFB;
+}
+
+.concepts-list li:last-child { border-bottom: none; }
+
+.concept-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 6px;
+  background: var(--current);
+}
+
+/* Video cards */
+.video-list { padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+
+.video-card {
+  border: 1.5px solid #F3F4F6;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.video-card:hover { border-color: #DC2626; box-shadow: 0 2px 10px rgba(220,38,38,0.08); }
+
+.video-card-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: #FFF8F8;
+  border-bottom: 1px solid #F9FAFB;
+  text-decoration: none;
+}
+
+.yt-thumb {
+  width: 42px; height: 30px;
+  background: #FF0000;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  color: white;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.video-title-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1A1A2E;
+  line-height: 1.4;
+}
+
+.video-card:hover .video-title-text { color: #DC2626; }
+
+.video-card-bottom { padding: 10px 14px; }
+
+.video-channel-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #F3F4F6;
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #6B7280;
+  margin-bottom: 7px;
+}
+
+.video-portion {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  font-size: 12.5px;
+  color: #4B5563;
+  line-height: 1.5;
+}
+
+.portion-pin {
+  font-size: 14px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* Challenges section */
+.challenges-section {
+  background: white;
+  border-radius: 18px;
+  border: 1.5px solid #E5E7EB;
+  overflow: hidden;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.challenges-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 24px;
+  background: linear-gradient(135deg, #FFF7ED, #FFFBEB);
+  border-bottom: 2px solid #FED7AA;
+}
+
+.target-icon {
+  width: 38px; height: 38px;
+  background: linear-gradient(135deg, #F97316, #EF4444);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.challenges-banner h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+  color: #92400E;
+  line-height: 1;
+}
+
+.challenges-banner p {
+  font-size: 13px;
+  color: #B45309;
+  margin-top: 2px;
+}
+
+.challenge-item {
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid #FEF3C7;
+}
+
+.challenge-item:last-child { border-bottom: none; }
+
+.ch-num-col {
+  width: 60px;
+  background: #FFFBEB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid #FEF3C7;
+  flex-shrink: 0;
+}
+
+.ch-num-badge {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.ch-1 { background: #FEF3C7; color: #92400E; }
+.ch-2 { background: #FED7AA; color: #7C2D12; }
+.ch-3 { background: #FECACA; color: #7F1D1D; }
+
+.ch-body { padding: 16px 22px; font-size: 14px; color: #374151; line-height: 1.65; }
+
+/* Bonus card */
+.bonus-card {
+  border-radius: 18px;
+  overflow: hidden;
+  margin-bottom: 32px;
+  border: 2px solid #A7F3D0;
+  background: linear-gradient(135deg, #ECFDF5, #F0FDF9);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.bonus-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  border-bottom: 1.5px solid #A7F3D0;
+  background: linear-gradient(135deg, #D1FAE5, #ECFDF5);
+}
+
+.star-icon {
+  width: 38px; height: 38px;
+  background: linear-gradient(135deg, #10B981, #059669);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.bonus-header h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  color: #065F46;
+}
+
+.bonus-header p {
+  font-size: 12px;
+  color: #047857;
+  margin-top: 2px;
+}
+
+.bonus-body {
+  padding: 18px 24px;
+  font-size: 14px;
+  color: #065F46;
+  line-height: 1.7;
+}
+
+/* Module nav */
+.module-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.mn-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  border-radius: 10px;
+  border: 1.5px solid #E5E7EB;
+  background: white;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  font-family: inherit;
+  transition: all 0.15s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.mn-btn:hover:not(:disabled) {
+  background: var(--current);
+  border-color: var(--current);
+  color: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.mn-btn:disabled { opacity: 0.3; cursor: default; }
+
+.step-pills {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.step-pill {
+  height: 6px;
+  border-radius: 99px;
+  background: #E5E7EB;
+  transition: all 0.2s;
+  cursor: pointer;
+  width: 24px;
+}
+
+.step-pill.active {
+  background: var(--current);
+  width: 32px;
+}
+
+.step-pill:hover:not(.active) { background: #D1D5DB; }
+
+/* ── Scrollbar ────────────────────────────────────────────────────────────── */
+#sidebar::-webkit-scrollbar { width: 4px; }
+#sidebar::-webkit-scrollbar-track { background: transparent; }
+#sidebar::-webkit-scrollbar-thumb { background: #2D3148; border-radius: 99px; }
+</style>
 </head>
 <body>
-    <header>
-        <h1>🚀 Build Smarter</h1>
-        <p>Building intelligent solutions for a better tomorrow</p>
-    </header>
 
-    <main>
-        <section>
-            <h2>Welcome</h2>
-            <p>This is the GitHub Pages site for Build Smarter. Here you'll find information about our project and its features.</p>
-        </section>
+<!-- ══════════════ SIDEBAR ══════════════ -->
+<aside id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-badge">
+      <span>🚀</span>
+      <strong>BUILD SMARTER</strong>
+    </div>
+    <h1>Jasper's<br>Coding Course</h1>
+    <p>12 weeks · Scratch → Python</p>
+  </div>
 
-        <section>
-            <h2>Features</h2>
-            <div class="features">
-                <div class="feature-card">
-                    <h3>⚡ Performance</h3>
-                    <p>Optimized for speed and efficiency to deliver results faster.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>🔧 Flexible</h3>
-                    <p>Adaptable solution that works with your existing workflow.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>📊 Scalable</h3>
-                    <p>Grows with your needs, from small projects to enterprise solutions.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>🛡️ Secure</h3>
-                    <p>Built with security best practices to protect your data.</p>
-                </div>
-            </div>
-        </section>
+  <div class="sidebar-progress">
+    <div class="progress-label">
+      <span>Progress</span>
+      <span id="prog-label">Overview</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="prog-fill"></div>
+    </div>
+  </div>
 
-        <section>
-            <h2>Getting Started</h2>
-            <p>To get started with Build Smarter, visit our <a href="https://github.com/jarisuki/Build-Smarter">GitHub repository</a> for more information and documentation.</p>
-        </section>
+  <nav id="sidebar-nav">
+    <div class="nav-section-label">Start here</div>
+    <div class="nav-item active" onclick="showPanel('intro')" id="nav-intro" data-theme="intro">
+      <div class="nav-dot">📋</div>
+      <div class="nav-item-text">
+        <span class="wk">Overview</span>
+        <span class="ttl">How This Course Works</span>
+      </div>
+    </div>
+    <div class="nav-section-label">Modules</div>
+  </nav>
+</aside>
 
-        <section>
-            <h2>Learn More</h2>
-            <p>Check out our <a href="https://github.com/jarisuki/Build-Smarter/wiki">Wiki</a> for detailed documentation and guides.</p>
-        </section>
-    </main>
+<!-- ══════════════ MAIN ══════════════ -->
+<main id="main">
 
-    <footer>
-        <p>&copy; 2026 Build Smarter. All rights reserved.</p>
-        <p><a href="https://github.com/jarisuki/Build-Smarter">View on GitHub</a></p>
-    </footer>
+<!-- ── INTRO PANEL ── -->
+<div class="panel active" id="panel-intro">
+<div class="panel-wrap">
+
+  <div class="intro-hero">
+    <div class="intro-pill">✦ Personal Course · Made for You</div>
+    <h1>Build Smarter,<br><span>Jasper Kwan!</span> 🎮</h1>
+    <div class="sub">Your personal 12-week journey from Scratch game maker to Python programmer — built around the games and puzzles you love.</div>
+    <div class="path-tag">
+      <span>🟧 Scratch (Intermediate)</span>
+      <span class="arrow">→</span>
+      <span>🐍 Python Introduction</span>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Your 6 Modules</h2>
+  <div class="modules-grid" id="intro-module-grid"></div>
+
+  <h2 class="section-heading">How It Works</h2>
+  <div class="how-grid">
+    <div class="how-card">
+      <div class="hw-icon" style="background:#EDE9FE;">📺</div>
+      <h3>Step 1 · Watch</h3>
+      <p>Each module links to the best YouTube tutorial for that topic — handpicked for clarity. We tell you exactly which part to watch.</p>
+    </div>
+    <div class="how-card">
+      <div class="hw-icon" style="background:#FEF3C7;">🔧</div>
+      <h3>Step 2 · Modify It</h3>
+      <p>After watching, you get 3 challenges that push you to change, break, and rebuild. This is where the real learning happens — not the watching.</p>
+    </div>
+    <div class="how-card">
+      <div class="hw-icon" style="background:#DBEAFE;">🧠</div>
+      <h3>Why This Works</h3>
+      <p>Passive watching feels like learning but isn't. The moment you make something break and then fix it, you own that concept forever.</p>
+    </div>
+    <div class="how-card">
+      <div class="hw-icon" style="background:#D1FAE5;">⭐</div>
+      <h3>Bonus Challenges</h3>
+      <p>Every module ends with a bonus — harder and more open-ended. Skip it if you're still on the main 3. Come back when things click.</p>
+    </div>
+  </div>
+
+  <h2 class="section-heading">Challenge Difficulty Guide</h2>
+  <div class="legend-card">
+    <div class="legend-row">
+      <div class="diff-badge diff-1">1</div>
+      <div class="legend-text">
+        <strong>Guided Change</strong>
+        <span>A specific, achievable modification. Follow the pattern from the tutorial — builds confidence and reinforces what you just saw.</span>
+      </div>
+    </div>
+    <div class="legend-row">
+      <div class="diff-badge diff-2">2</div>
+      <div class="legend-text">
+        <strong>Requires Thinking</strong>
+        <span>You'll need to experiment and problem-solve. The tutorial won't give you the exact answer — you have to figure it out.</span>
+      </div>
+    </div>
+    <div class="legend-row">
+      <div class="diff-badge diff-3">3</div>
+      <div class="legend-text">
+        <strong>Open-Ended</strong>
+        <span>No single right answer. You make the design decisions. This is where you go from copying to creating.</span>
+      </div>
+    </div>
+    <div class="legend-row">
+      <div class="diff-badge diff-b">⭐</div>
+      <div class="legend-text">
+        <strong>Bonus — Go Deeper</strong>
+        <span>More complex and more rewarding. For when the first three feel comfortable and you're hungry for more.</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;">
+    <button class="cta-btn" onclick="showPanel(0)">Start Module 1 <span>→</span></button>
+  </div>
+
+</div>
+</div>
+
+<!-- MODULE PANELS injected here -->
+<div id="module-panels"></div>
+
+</main>
+
+<script>
+/* ── Module data ──────────────────────────────────────────────────────────── */
+const MOD_THEMES = [
+  { color:'#7C3AED', bg:'linear-gradient(135deg,#4C1D95,#7C3AED)', light:'#EDE9FE', mid:'#A78BFA', icon:'🧠' },
+  { color:'#2563EB', bg:'linear-gradient(135deg,#1E3A8A,#2563EB)', light:'#DBEAFE', mid:'#60A5FA', icon:'🏃' },
+  { color:'#DC2626', bg:'linear-gradient(135deg,#7F1D1D,#DC2626)', light:'#FEE2E2', mid:'#F87171', icon:'👾' },
+  { color:'#0891B2', bg:'linear-gradient(135deg,#164E63,#0891B2)', light:'#CFFAFE', mid:'#22D3EE', icon:'✨' },
+  { color:'#D97706', bg:'linear-gradient(135deg,#78350F,#D97706)', light:'#FEF3C7', mid:'#FCD34D', icon:'🧩' },
+  { color:'#059669', bg:'linear-gradient(135deg,#064E3B,#059669)', light:'#D1FAE5', mid:'#34D399', icon:'🐍' },
+];
+
+const modules = [
+  {
+    num:1, weeks:'Weeks 1–2',
+    title:'Variables & Game Intelligence',
+    tagline:'Give your game a brain — track score, lives, and game state',
+    concepts:[
+      'Variables (score, lives, timer, high score)',
+      'Broadcast messages to control game state',
+      'Start screen → Playing → Game Over flow',
+      'Saving and comparing values'
+    ],
+    videos:[
+      { title:'Fun Scratch Game 🎮 | Learn Variables & Score in Scratch', url:'https://www.youtube.com/watch?v=DZemaX7rUc0', channel:'griffpatch', portion:'Watch the full video — introduces variables and score in a real game context, ideal for kicking off this module' },
+      { title:'How to Add a High Score to Your Scratch Game', url:'https://www.youtube.com/watch?v=g52oieGla1I', channel:'Scratch tutorial', portion:'Watch the full video after the first — directly teaches what you need for Challenge 1' }
+    ],
+    challenges:[
+      "Add a High Score that saves between rounds — the game should flash 'New High Score!' when you beat it.",
+      'Add a countdown timer. When it hits zero the game ends — even if you still have lives left.',
+      "Build a proper 'Game Over' screen that shows your final score AND the high score side by side."
+    ],
+    bonus:'Add three difficulty levels (Easy / Medium / Hard) on the start screen. Each one sets a different timer length and starting number of lives.'
+  },
+  {
+    num:2, weeks:'Weeks 3–4',
+    title:'Movement & Physics',
+    tagline:'Make your game feel alive — gravity, momentum, and smooth motion',
+    concepts:[
+      'Velocity and acceleration variables',
+      'Simulating gravity with a y-velocity loop',
+      'Jumping and ground detection',
+      'Friction and surface effects'
+    ],
+    videos:[
+      { title:'Code a Platformer Game | 1. The Basics', url:'https://www.youtube.com/watch?v=D16hTnDGweo', channel:'griffpatch', portion:'Watch the full video — builds movement, gravity, and jumping from the ground up. This is the core of the module.' },
+      { title:'Code a Platformer Game | 2. Next Level', url:'https://www.youtube.com/watch?v=HdFxavSE9H8', channel:'griffpatch', portion:'Optional — watch after finishing the challenges for extra ideas on extending your platformer' }
+    ],
+    challenges:[
+      "Change the gravity value to simulate the Moon (very floaty) and Jupiter (very heavy). Add a 'Planet' variable the player picks at the start.",
+      'Add a double-jump: the player can jump once in the air, but cannot jump a third time until they land.',
+      'Make the character skid to a stop instead of stopping instantly — add friction so they slide slightly on landing.'
+    ],
+    bonus:"Create two surface types: normal ground and ice. Ice has almost no friction so the player slides around. Use a different color to mark ice tiles and apply different physics to each."
+  },
+  {
+    num:3, weeks:'Weeks 5–6',
+    title:'Enemies & AI Behavior',
+    tagline:'Build smarter opponents — sensing, chasing, and custom block logic',
+    concepts:[
+      'Collision detection with color sensing',
+      'Enemy patrol patterns (back and forth)',
+      'Sensing distance to player for chase behavior',
+      'Custom blocks to organize complex logic',
+      'Hit flash and invincibility frames'
+    ],
+    videos:[
+      { title:'Coding Platformer Enemies | 11. Scratch Platformer Tutorial', url:'https://www.youtube.com/watch?v=Qh0yz_qPQeA', channel:'griffpatch', portion:'Watch the full video — covers patrol patterns, collision damage, and stomping enemies' },
+      { title:'Scratch ENEMY AI | Top Down Shooter (Ep. 2/2)', url:'https://www.youtube.com/watch?v=-XgHyWNaxtk', channel:'YouTube Scratch tutorials', portion:'Watch from the beginning through ~8:00 — this section covers the chase AI logic you need for Challenge 2' }
+    ],
+    challenges:[
+      "Make the enemy move twice as fast when the player comes within 100 pixels — it 'notices' you and switches from patrol to chase mode.",
+      'Add a second enemy type with completely different behavior: one patrols a platform back and forth, the other actively chases the player wherever they go.',
+      'Add a hit flash: when the player takes damage, they briefly turn red and are invincible for 1.5 seconds so they cannot be hit repeatedly.'
+    ],
+    bonus:"Give enemies a mini health bar above their heads. They take 2–3 hits to defeat, and the bar shrinks with each hit. Bonus if it changes from green to red."
+  },
+  {
+    num:4, weeks:'Weeks 7–8',
+    title:'Clones & Simulations',
+    tagline:'Multiply the action — projectiles, particles, and emergent behavior',
+    concepts:[
+      'Creating and deleting clones',
+      'Passing data to clones at creation time',
+      'Lists as simple data stores',
+      'Randomness and probability',
+      'Projectile and particle systems'
+    ],
+    videos:[
+      { title:'Code a Fun Space Shooter Game 🚀 | 1. Move & Shoot', url:'https://www.youtube.com/watch?v=sqsNb0s7Oq4', channel:'griffpatch', portion:'Watch the full video — teaches movement AND clone-based shooting together in one complete project' },
+      { title:'Space Shooter 2 — Enemy Collisions', url:'https://www.youtube.com/watch?v=okhIwJUOalM', channel:'griffpatch', portion:'Watch from the beginning through ~10:00 — shows how enemy clones are created and destroyed on collision' }
+    ],
+    challenges:[
+      'Add a particle trail to your projectiles — each bullet spawns 5 small spark clones behind it that fade out as they fly.',
+      "Create a 'spread shot' power-up: when collected, the player fires 3 bullets at once fanned out at slight angles instead of one straight shot.",
+      '15 sprites bouncing around the stage at random speeds. When two collide, one disappears. Last one standing wins — show a live counter.'
+    ],
+    bonus:'Design a satisfying explosion when an enemy is defeated: 8–12 particle clones fly outward in all directions, each shrinking until they vanish. Tune the speed, spread, and shrink rate until it feels great.'
+  },
+  {
+    num:5, weeks:'Weeks 9–10',
+    title:'Puzzle Logic & Level Design',
+    tagline:'Think like a designer — build levels with data, triggers, and locks',
+    concepts:[
+      'Lists as level data (storing tile or piece positions)',
+      'Key-and-lock mechanics using variables',
+      'Trigger zones and checkpoints',
+      'Multiple levels with a level selector',
+      'Move counters and par scoring'
+    ],
+    videos:[
+      { title:'Scratch Tutorial: 15-Puzzle (Part 1)', url:'https://www.youtube.com/watch?v=FVTmOxBUvcs', channel:'YouTube Scratch tutorials', portion:'Watch the full Part 1 — clearly teaches list-based puzzle logic. Part 2 is optional and adds more complexity.' },
+      { title:'Scratch Tutorial | Puzzle Game', url:'https://www.youtube.com/watch?v=0VC0dlLvfDo', channel:'YouTube Scratch tutorials', portion:'Watch the full video — good for seeing a different puzzle approach using trigger zones and state tracking' }
+    ],
+    challenges:[
+      'Add a second, harder level. The player must complete Level 1 before Level 2 unlocks — use a variable to track which levels are cleared.',
+      'Add a Hint button. Pressing it reveals one clue and costs 5 points. Limit hints to 2 per level, then disable the button.',
+      "Add a moves counter. Show the player's move count and a 'par' target number. Rate their performance: Gold / Silver / Bronze."
+    ],
+    bonus:"Design a 3-level puzzle game polished enough that a friend can play it without you explaining anything. Test it on a family member and fix every moment of confusion you observe."
+  },
+  {
+    num:6, weeks:'Weeks 11–12',
+    title:'Bridge to Python',
+    tagline:'Your first text-based language — the ideas you know, a new way to write them',
+    concepts:[
+      'Python syntax: no blocks, just typed words',
+      'Variables, for/while loops, and if/else',
+      'Defining and calling your own functions',
+      'Python Turtle: drawing shapes with code',
+      'Translating Scratch logic into Python'
+    ],
+    videos:[
+      { title:'Python Turtle Graphics Tutorial #1 — Introduction', url:'https://www.youtube.com/watch?v=p7CiFhiTdvY', channel:'Tech With Tim', portion:'Watch the full video — introduces the Turtle library, drawing shapes, loops, and colors. ~25 minutes, worth every second.' },
+      { title:'Python Turtle Graphics Tutorial #3 — Key Presses & Events', url:'https://www.youtube.com/watch?v=hPnZqWSRNZI', channel:'Tech With Tim', portion:'Watch from 0:00 through ~8:00 — teaches how to make Turtle respond to keyboard input, essential for the Bonus challenge' }
+    ],
+    challenges:[
+      'Draw a shape in Turtle, then wrap it inside a loop so it repeats and rotates — creating a spiral or mandala pattern. Experiment with the angle.',
+      'Make your Turtle change color after drawing each shape. Store your favorite colors in a list and cycle through them using a loop index.',
+      'Pick your best Scratch project. Recreate the main character movement in Python Turtle — translate the Scratch blocks into Python lines, one by one.'
+    ],
+    bonus:"Make your drawing interactive: use input() to ask 'How many sides?' and 'What color?' then draw exactly what the user asked for. You've just built your first Python program that responds to a real human."
+  }
+];
+
+/* ── Build nav items ──────────────────────────────────────────────────────── */
+function buildNav() {
+  const nav = document.getElementById('sidebar-nav');
+  modules.forEach((mod, idx) => {
+    const t = MOD_THEMES[idx];
+    const el = document.createElement('div');
+    el.className = 'nav-item';
+    el.id = `nav-${idx}`;
+    el.setAttribute('data-idx', idx);
+    el.setAttribute('style', `--current:${t.color}`);
+    el.onclick = () => showPanel(idx);
+    el.innerHTML = `
+      <div class="nav-dot" style="background:#1E2030;font-size:18px">${t.icon}</div>
+      <div class="nav-item-text">
+        <span class="wk">${mod.weeks}</span>
+        <span class="ttl">${mod.title}</span>
+      </div>
+    `;
+    nav.appendChild(el);
+  });
+}
+
+/* ── Build intro module grid ─────────────────────────────────────────────── */
+function buildIntroGrid() {
+  const grid = document.getElementById('intro-module-grid');
+  modules.forEach((mod, idx) => {
+    const t = MOD_THEMES[idx];
+    const el = document.createElement('div');
+    el.className = 'mod-overview-card';
+    el.style.setProperty('--c', t.color);
+    el.onclick = () => showPanel(idx);
+    el.innerHTML = `
+      <div class="mod-ov-icon">${t.icon}</div>
+      <div class="mod-ov-num" style="color:${t.color}">Module ${mod.num}</div>
+      <div class="mod-ov-title">${mod.title}</div>
+      <div class="mod-ov-weeks">${mod.weeks}</div>
+    `;
+    grid.appendChild(el);
+  });
+}
+
+/* ── Build module panels ─────────────────────────────────────────────────── */
+function buildModulePanels() {
+  const container = document.getElementById('module-panels');
+  modules.forEach((mod, idx) => {
+    const t = MOD_THEMES[idx];
+    const panel = document.createElement('div');
+    panel.className = 'panel';
+    panel.id = `panel-${idx}`;
+    panel.style.setProperty('--current', t.color);
+    panel.style.setProperty('--current-light', t.light);
+    panel.style.setProperty('--current-mid', t.mid);
+
+    // Progress bar segments
+    const segs = modules.map((_, si) => {
+      let cls = 'mpb-seg';
+      if (si < idx) cls += ' done';
+      else if (si === idx) cls += ' active';
+      return `<div class="${cls}"></div>`;
+    }).join('');
+
+    // Videos HTML
+    const vids = mod.videos.map(v => `
+      <div class="video-card">
+        <a class="video-card-top" href="${v.url}" target="_blank" rel="noopener">
+          <div class="yt-thumb">▶</div>
+          <div class="video-title-text">${v.title}</div>
+        </a>
+        <div class="video-card-bottom">
+          <div class="video-channel-tag">📺 ${v.channel}</div>
+          <div class="video-portion"><span class="portion-pin">📍</span> ${v.portion}</div>
+        </div>
+      </div>
+    `).join('');
+
+    // Challenges HTML
+    const chs = mod.challenges.map((ch, ci) => `
+      <div class="challenge-item">
+        <div class="ch-num-col"><div class="ch-num-badge ch-${ci+1}">${ci+1}</div></div>
+        <div class="ch-body">${ch}</div>
+      </div>
+    `).join('');
+
+    // Concepts
+    const cons = mod.concepts.map(c => `
+      <li><span class="concept-dot"></span><span>${c}</span></li>
+    `).join('');
+
+    // Prev / Next
+    const prevLabel = idx === 0 ? '← Overview' : `← Module ${idx}`;
+    const prevAction = idx === 0 ? "showPanel('intro')" : `showPanel(${idx-1})`;
+    const nextLabel = idx === modules.length-1 ? "Done! 🎉" : `Module ${idx+2} →`;
+    const nextDisabled = idx === modules.length-1 ? 'disabled' : '';
+    const nextAction = idx === modules.length-1 ? '' : `showPanel(${idx+1})`;
+
+    // Step pills
+    const pills = modules.map((_, pi) =>
+      `<div class="step-pill ${pi===idx?'active':''}" onclick="showPanel(${pi})"></div>`
+    ).join('');
+
+    panel.innerHTML = `
+    <div class="panel-wrap">
+      <div class="module-nav">
+        <button class="mn-btn" onclick="${prevAction}">${prevLabel}</button>
+        <div class="step-pills">${pills}</div>
+        <button class="mn-btn" onclick="${nextAction}" ${nextDisabled}>${nextLabel}</button>
+      </div>
+
+      <div class="mod-progress-bar">${segs}</div>
+
+      <div class="mod-hero" style="background:${t.bg}" data-icon="${t.icon}">
+        <div class="mod-eyebrow">Module ${mod.num} &nbsp;·&nbsp; ${mod.weeks}</div>
+        <h2>${mod.title}</h2>
+        <div class="tagline">${mod.tagline}</div>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-icon" style="background:${t.light};font-size:16px">${t.icon}</div>
+            <h3>What you'll learn</h3>
+          </div>
+          <ul class="concepts-list">${cons}</ul>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-icon" style="background:#FEE2E2;font-size:16px">▶</div>
+            <h3>Watch this</h3>
+          </div>
+          <div class="video-list">${vids}</div>
+        </div>
+      </div>
+
+      <div class="challenges-section">
+        <div class="challenges-banner">
+          <div class="target-icon">🎯</div>
+          <div>
+            <h3>Modify It</h3>
+            <p>Don't just watch — change it. This is where learning really happens.</p>
+          </div>
+        </div>
+        ${chs}
+      </div>
+
+      <div class="bonus-card">
+        <div class="bonus-header">
+          <div class="star-icon">⭐</div>
+          <div>
+            <h3>Bonus Challenge</h3>
+            <p>For when the first three feel comfortable and you want to go deeper</p>
+          </div>
+        </div>
+        <div class="bonus-body">${mod.bonus}</div>
+      </div>
+    </div>`;
+
+    container.appendChild(panel);
+  });
+}
+
+/* ── Show panel ──────────────────────────────────────────────────────────── */
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item, [id^="nav-"]').forEach(n => n.classList.remove('active'));
+
+  const fill = document.getElementById('prog-fill');
+  const label = document.getElementById('prog-label');
+
+  if (id === 'intro') {
+    document.getElementById('panel-intro').classList.add('active');
+    document.getElementById('nav-intro').classList.add('active');
+    fill.style.width = '0%';
+    label.textContent = 'Overview';
+    document.documentElement.style.setProperty('--current', '#7C3AED');
+  } else {
+    const idx = parseInt(id);
+    if (isNaN(idx) || idx < 0 || idx >= modules.length) return;
+    document.getElementById(`panel-${idx}`).classList.add('active');
+    const navEl = document.getElementById(`nav-${idx}`);
+    if (navEl) navEl.classList.add('active');
+    const t = MOD_THEMES[idx];
+    fill.style.width = `${Math.round(((idx + 1) / modules.length) * 100)}%`;
+    label.textContent = `Module ${idx + 1} of ${modules.length}`;
+    document.documentElement.style.setProperty('--current', t.color);
+    // Tint nav active dot
+    if (navEl) navEl.querySelector('.nav-dot').style.background = t.color;
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ── Init ─────────────────────────────────────────────────────────────────── */
+buildNav();
+buildIntroGrid();
+buildModulePanels();
+</script>
 </body>
 </html>
